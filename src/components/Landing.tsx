@@ -1,8 +1,19 @@
+import { DishMascot } from '../art/DishMascot';
+import type { ArchetypeId } from '../lib/types';
+
 interface LandingProps {
   onStart: () => void;
   onResume: () => void;
   resumeAvailable: boolean;
 }
+
+const CAST: ArchetypeId[] = [
+  'laksa',
+  'chicken-rice',
+  'chilli-crab',
+  'satay',
+  'ice-kachang',
+];
 
 export function Landing({ onStart, onResume, resumeAvailable }: LandingProps) {
   return (
@@ -16,8 +27,21 @@ export function Landing({ onStart, onResume, resumeAvailable }: LandingProps) {
           <br />
           Are You?
         </h1>
-        <div className="my-6 h-0.5 w-24 bg-chilli" aria-hidden="true" />
-        <p className="text-base text-kopi-mid">
+        <div className="my-5 h-0.5 w-24 bg-chilli" aria-hidden="true" />
+
+        <div className="flex items-end justify-center gap-1" aria-hidden="true">
+          {CAST.map((id, i) => (
+            <span
+              key={id}
+              className="animate-float"
+              style={{ animationDelay: `${i * 0.18}s` }}
+            >
+              <DishMascot id={id} size={i % 2 === 0 ? 58 : 46} />
+            </span>
+          ))}
+        </div>
+
+        <p className="mt-6 text-base text-kopi-mid">
           Singapore&apos;s most unscientific personality test. 8 questions,
           about 2 minutes, zero data collected &mdash; find out which hawker
           dish you confirm are.

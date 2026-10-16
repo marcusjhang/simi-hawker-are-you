@@ -1,6 +1,9 @@
+import { Motif } from '../art/motifs';
+
 interface TraitChipProps {
   label: string;
   tone: 'chilli' | 'kopi' | 'turmeric';
+  icon?: string;
 }
 
 const TONES: Record<TraitChipProps['tone'], string> = {
@@ -9,12 +12,13 @@ const TONES: Record<TraitChipProps['tone'], string> = {
   turmeric: 'bg-turmeric text-kopi',
 };
 
-export function TraitChip({ label, tone }: TraitChipProps) {
+export function TraitChip({ label, tone, icon }: TraitChipProps) {
   return (
     <span
       data-testid="trait-chip"
-      className={`rounded px-3 py-1 font-[family-name:var(--font-label)] text-[0.7rem] font-bold tracking-wider ${TONES[tone]}`}
+      className={`inline-flex items-center gap-1 rounded px-3 py-1 font-[family-name:var(--font-label)] text-[0.7rem] font-bold tracking-wider ${TONES[tone]}`}
     >
+      {icon && <Motif id={icon} size={13} />}
       {label}
     </span>
   );
