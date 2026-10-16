@@ -1,4 +1,5 @@
 import type { Archetype } from '../lib/types';
+import { DishMascot } from '../art/DishMascot';
 
 interface ResultCardProps {
   dish: Archetype;
@@ -53,6 +54,9 @@ export function ResultCard({ dish, url }: ResultCardProps) {
           }}
         >
           YOU CONFIRM ARE...
+        </div>
+        <div style={{ marginTop: 8 }}>
+          <DishMascot id={dish.id} size={360} />
         </div>
         <div
           style={{

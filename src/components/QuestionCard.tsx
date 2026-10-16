@@ -1,3 +1,4 @@
+import { Motif } from '../art/motifs';
 import { byId } from '../data/archetypes';
 import type { Question } from '../lib/types';
 
@@ -14,9 +15,14 @@ export function QuestionCard({ question, selectedId, onSelect }: QuestionCardPro
 
   return (
     <div>
-      <h2 className="font-[family-name:var(--font-display)] text-3xl leading-tight text-kopi">
-        {question.text}
-      </h2>
+      <div className="flex items-center gap-3">
+        <span className="flex size-12 shrink-0 items-center justify-center rounded-full border-2 border-kopi-mid/40 bg-paper-card text-chilli">
+          <Motif id={question.id} size={28} />
+        </span>
+        <h2 className="font-[family-name:var(--font-display)] text-3xl leading-tight text-kopi">
+          {question.text}
+        </h2>
+      </div>
       <div className="mt-6 flex flex-col gap-3">
         {question.options.map((option, i) => {
           const label = isTiebreak
@@ -36,8 +42,10 @@ export function QuestionCard({ question, selectedId, onSelect }: QuestionCardPro
               }`}
             >
               <span
-                className={`flex size-7 shrink-0 items-center justify-center rounded font-[family-name:var(--font-label)] text-xs font-bold ${
-                  selected ? 'bg-chilli text-paper-card' : 'bg-kopi-mid/20 text-kopi'
+                className={`flex size-8 shrink-0 items-center justify-center rounded-full border-2 font-[family-name:var(--font-label)] text-xs font-bold ${
+                  selected
+                    ? 'border-chilli bg-chilli text-paper-card'
+                    : 'border-kopi-mid/50 text-kopi'
                 }`}
                 aria-hidden="true"
               >

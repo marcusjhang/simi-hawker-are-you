@@ -1,4 +1,6 @@
 import { useRef, useState } from 'react';
+import { DishMascot } from '../art/DishMascot';
+import { ChopstickRule, Motif } from '../art/motifs';
 import { byId } from '../data/archetypes';
 import type { Result } from '../lib/types';
 import { TraitChip } from './TraitChip';
@@ -17,6 +19,7 @@ interface ResultReceiptProps {
 }
 
 const TONES = ['chilli', 'kopi', 'turmeric'] as const;
+const TRAIT_ICONS = ['q3', 'q4', 'q6'];
 
 export function ResultReceipt({ result, onRestart }: ResultReceiptProps) {
   const dish = byId[result.winner];
@@ -55,11 +58,25 @@ export function ResultReceipt({ result, onRestart }: ResultReceiptProps) {
         </div>
       </div>
 
-      <article className="w-full rounded-md border-[3px] border-double border-kopi-mid bg-paper-card px-6 py-8 shadow-[inset_0_0_0_4px_var(--color-paper-card),inset_0_0_0_5px_var(--color-chilli)]">
+      <article className="relative w-full animate-print rounded-md border-[3px] border-double border-kopi-mid bg-paper-card px-6 py-8 shadow-[inset_0_0_0_4px_var(--color-paper-card),inset_0_0_0_5px_var(--color-chilli)]">
+        <span
+          className="absolute -right-2 -top-2 rotate-12 rounded-full border-2 border-dashed border-chilli/70 bg-paper-card/80 px-2 py-2 text-center font-[family-name:var(--font-label)] text-[0.5rem] font-bold leading-tight tracking-widest text-chilli/90"
+          aria-hidden="true"
+        >
+          CERTIFIED
+          <br />
+          SHIOK
+        </span>
+
         <p className="text-center font-[family-name:var(--font-label)] text-xs tracking-[0.3em] text-kopi-mid">
           AH KOW KOPITIAM
         </p>
-        <p className="mt-6 text-center font-[family-name:var(--font-label)] text-xs tracking-[0.2em] text-chilli">
+
+        <div className="mt-4 flex justify-center">
+          <DishMascot id={dish.id} size={168} className="animate-float" />
+        </div>
+
+        <p className="mt-2 text-center font-[family-name:var(--font-label)] text-xs tracking-[0.2em] text-chilli">
           YOU CONFIRM ARE...
         </p>
         <h1 className="mt-2 border-y-2 border-chilli py-3 text-center font-[family-name:var(--font-display)] text-4xl leading-tight text-kopi">
@@ -68,23 +85,30 @@ export function ResultReceipt({ result, onRestart }: ResultReceiptProps) {
         <p className="mt-4 text-center text-sm italic text-kopi-mid">{dish.tagline}</p>
         <div className="mt-4 flex flex-wrap justify-center gap-2">
           {dish.traits.map((t, i) => (
-            <TraitChip key={t} label={t} tone={TONES[i] ?? 'kopi'} />
+            <TraitChip
+              key={t}
+              label={t}
+              tone={TONES[i] ?? 'kopi'}
+              icon={TRAIT_ICONS[i]}
+            />
           ))}
         </div>
         <p className="mt-6 text-[0.95rem] leading-relaxed text-ink">{dish.blurb}</p>
-        <p className="mt-3 text-sm text-kopi-mid">
-          Best eaten with:{' '}
+        <p className="mt-3 flex items-center gap-2 text-sm text-kopi-mid">
+          Best eaten with:
+          <DishMascot id={dish.pairing} size={26} />
           <span className="font-semibold text-kopi">{byId[dish.pairing].name}</span>
         </p>
 
-        <div className="my-6 border-t border-dashed border-kopi-mid" />
+        <ChopstickRule className="my-6" />
 
         <p className="font-[family-name:var(--font-label)] text-xs tracking-[0.2em] text-kopi-mid">
           YOUR TOP 3
         </p>
-        <ul className="mt-3 space-y-1 font-[family-name:var(--font-label)] text-sm text-ink">
+        <ul className="mt-3 space-y-2 font-[family-name:var(--font-label)] text-sm text-ink">
           {top3.map((r) => (
-            <li key={r.id} data-testid="breakdown-item" className="flex items-baseline gap-2">
+            <li key={r.id} data-testid="breakdown-item" className="flex items-center gap-2">
+              <DishMascot id={r.id} size={22} />
               <span className="uppercase">{byId[r.id].name}</span>
               <span className="flex-1 border-b border-dotted border-kopi-mid/60" aria-hidden="true" />
               <span className="font-bold text-kopi">{r.pct}%</span>
@@ -92,7 +116,7 @@ export function ResultReceipt({ result, onRestart }: ResultReceiptProps) {
           ))}
         </ul>
 
-        <div className="my-6 border-t border-dashed border-kopi-mid" />
+        <ChopstickRule className="my-6" />
         <p className="text-center font-[family-name:var(--font-label)] text-[0.65rem] tracking-[0.2em] text-kopi-mid">
           SINCE 1965 &middot; NO DATA COLLECTED
         </p>
@@ -101,8 +125,9 @@ export function ResultReceipt({ result, onRestart }: ResultReceiptProps) {
       <button
         type="button"
         onClick={handleShare}
-        className="mt-6 min-h-12 w-full rounded-md bg-kopi px-6 text-lg font-bold text-paper-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-chilli"
+        className="mt-6 flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-kopi px-6 text-lg font-bold text-paper-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-chilli"
       >
+        <Motif id="q4" size={20} />
         Share my hawker
       </button>
       {shareStatus && (
